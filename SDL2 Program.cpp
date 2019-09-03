@@ -13,35 +13,36 @@ int main(int argc, char* argv[]) {
 
 	if (screen.init() == false) {
 
-		std::cout << ls << "Can't initialize Program" << std::endl;
+		std::cout << ls << "Can't initialize SDL Program" << std::endl;
 
 		screen.clear();
 
 	}
 
-	bool quit = false;
+	//bool quit = false;
 
-	while (true) {
+	while (false) {
 
-		if (screen.process_events() == quit) {
+		if (screen.process_events() == true) {
 
 			screen.clear();
 
+			//break;
 		}
 
 	}
 	
 	struct color_details {
 
-		int64_t black = 00;
-		int64_t pink = 25525525500;
-		int64_t yellow = 0xFFFF3300;
-		int64_t green = 0x90BB00AA;
+		Uint32 black = 00;
+		Uint32 pink = 25525525500;
+		Uint32 yellow = 0xFFFF3300;
+		Uint32 green = 0x90BB00AA;
 
 	};
 	color_details colors;
 
-	screen.render(colors.green);
+	screen.render(colors.pink);
 
 	//SDL_Quit(); // cleans every initialized sub-events
 	
