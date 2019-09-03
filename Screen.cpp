@@ -102,13 +102,13 @@ namespace wilfred {
 
 			if (events.type == SDL_QUIT) {
 
-				return true;
+				return false;
 
 			}
 
 		}
 
-		return false;
+		return true;
 	}
 
 	void Screen::clear() {
