@@ -12,14 +12,14 @@ namespace wilfred {
 	public:
 		
 		
-		int64_t colorz; // hex code for window color
+		Uint32 color; // hex code for window color
 		
 		Screen();
 		//~Screen();
 
 		bool init();
 
-		void render(int64_t color);
+		void render(Uint32 &color);
 
 		bool process_events();
 
