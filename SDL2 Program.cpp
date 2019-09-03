@@ -19,19 +19,6 @@ int main(int argc, char* argv[]) {
 
 	}
 
-	//bool quit = false;
-
-	while (false) {
-
-		if (screen.process_events() == true) {
-
-			screen.clear();
-
-			//break;
-		}
-
-	}
-	
 	struct color_details {
 
 		Uint32 black = 00;
@@ -44,7 +31,20 @@ int main(int argc, char* argv[]) {
 
 	screen.render(colors.pink);
 
-	//SDL_Quit(); // cleans every initialized sub-events
+
+	bool quit = false;
+
+	while (true) {
+
+		if (screen.process_events() == quit) { // returns false if an event (action) is received
+
+			break;
+
+		}
+
+	}
+
+	screen.clear();
 	
 	return EXIT_SUCCESS;
 }
