@@ -1,6 +1,6 @@
 #include "pch.h"
 
-namespace wilfred {
+namespace sdl_wilfred {
 
 	Screen::Screen() {
 
@@ -8,15 +8,9 @@ namespace wilfred {
 		m_renderer = NULL;
 		m_texturer = NULL;
 
-	}
-
-	/*
-	Screen::~Screen() {
-
-		delete[](pixel_buffer);
+		color = 0;
 
 	}
-	*/
 
 	bool Screen::init() {
 
@@ -62,48 +56,102 @@ namespace wilfred {
 				return false;
 			}
 
+			pixel_buffer = new Uint32[screen_length * screen_width];
+
 		}
-		
+
+		return true;
+	}
+
+	void Screen::set_color(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
+
+		// 0x-RED-GREEN-BLUE-ALPHA. Based from the member pointer, "m_texturer"
+		// Bit-shifting pixel color values to the left per 8 bits (equal to 1 byte) and storing them in 'color' variable
+
+		color += red;
+		color <<= 8;
+
+		color += green;
+		color <<= 8;
+
+		color += blue;
+		color <<= 8;
+
+		color += 0xFF;
+
+		pixel_buffer[(y * screen_width) + x] = color; // this is one way to render the whole screen
 
 	}
 
-	void Screen::render(Uint32 &colorz) {
+	void Screen::preset_color(int x, int y, Uint32& colorz) {
 
-		this->color = colorz;
+		color = colorz;
 
-		//allows us to set a block of memory with a value
-		memset(pixel_buffer, color, screen_width * screen_length * sizeof(Uint32));
-		
-	    //color = 0x5726AF00; // 0x-RED-GREEN-BLUE-ALPHA. Based from the pointer member "m_texturer"
+		pixel_buffer[(y * screen_width) + x] = color;
 
-		for (int i = 0; i < screen_length * screen_width; i++) { // changing the color of the window
+	}
 
-			pixel_buffer[i] = color;
+	void Screen::set_pixels(int x, int y, Uint8 r, Uint8 g, Uint8 b) {
 
-			//color = 0xFFFF3300; // YELLOW
-			//color = 0x90BB00AA; // GREEN
-		}
+		// 0x-RED-GREEN-BLUE
+
+		color += r;
+		color <<= 8;
+
+		color += g;
+		color <<= 8;
+
+		color += b;
+		color <<= 8;
+
+		color += 0xFF;
+
+		pixel_buffer[(y * screen_width) + x] = color; 
+
+	}
+
+	void Screen::preset_pixels(Uint8 r, Uint8 g, Uint8 b) {
+
+		// 0x-RED-GREEN-BLUE
+
+		color += r;
+		color <<= 8;
+
+		color += g;
+		color <<= 8;
+
+		color += b;
+		color <<= 8;
+
+		color += 0xFF;
+
+		pixel_buffer[(screen_length / 2 * screen_width) + screen_width / 2] = color;
+
+	}
+
+	void Screen::update() {
 
 		SDL_UpdateTexture(m_texturer, NULL, pixel_buffer, screen_width * sizeof(Uint32)); // updates texture info from the pixel storage area
 
 		SDL_RenderClear(m_renderer); // clears the renderer
 
 		SDL_RenderCopy(m_renderer, m_texturer, NULL, NULL); // copies texture info to the renderer
-		
+
 		SDL_RenderPresent(m_renderer); // renders texture info on a window
 
 	}
 
 	bool Screen::process_events() {
 		
+		// returns false (0) if it receives an event (action) in the window
+
 		SDL_Event events;
 
-		while (SDL_PollEvent(&events)) { // returns true if it receives an event (action) in the window
+		while (SDL_PollEvent(&events)) { 
 
 			if (events.type == SDL_QUIT) {
 
 				return false;
-
 			}
 
 		}
@@ -122,22 +170,5 @@ namespace wilfred {
 		SDL_Quit();
 		SDL_QUIT;
 	}
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
