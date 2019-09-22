@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include <SDL.h>
-#include <SDL_video.h>
+#include <iomanip>
 #include "Screen.h"
 
 const std::string ls{ "\n\t" }; // User-defined variable
