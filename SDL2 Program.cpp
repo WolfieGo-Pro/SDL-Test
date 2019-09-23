@@ -1,50 +1,71 @@
-// Program.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+/*
+  // Program.cpp : This file contains the 'main' function. Program execution begins and ends there.
+
+  // Creating an SDL Window
+
+  // Screen Class
+
+  // Bit-Shifting (see Bit-Shifting.cpp)
+
+*/
 
 #include "pch.h"
 
-//using namespace wilfred;
+using namespace sdl_wilfred;
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
 	
-	wilfred::Screen screen;
+	Screen screen;
 
 	std::cout << ls << "Hey!" << std::endl;
 
 	if (screen.init() == false) {
 
-		std::cout << ls << "Can't initialize SDL Program" << std::endl;
+		std::cout << ls << "Error on Start-up" << std::endl;
 
 		screen.clear();
 
 	}
 
-	struct color_details {
-
-		Uint32 black = 00;
-		Uint32 pink = 25525525500;
-		Uint32 yellow = 0xFFFF3300;
-		Uint32 green = 0x90BB00AA;
-
-	};
-	color_details colors;
-
-	screen.render(colors.pink);
-
-
-	bool quit = false;
+	Screen::PRESET_COLORS preset; // instantiates a struct object that contains preset color values in hex
 
 	while (true) {
+
+		// use 'set_color()' to set position and color values of pixels
+		// use 'preset_color()' to set position and use preset color values of pixels
+
+		for (int x = 0; x < Screen::screen_width; x++) {
+
+			for (int y = 0; y < Screen::screen_length; y++) {
+
+				screen.preset_color(x, y, preset.black_pr);
+
+			}
+		}
+
+		// use 'set_pixel()' to render/draw individual pixel on the screen
+		// use 'preset_pixels()' to set color, but use preset position of individual pixel on the screen (usually in the middle)
+
+		screen.preset_pixels(255, 0, 0);
+
+		// Render/Update screen texture (pixel info ) in window
+
+		screen.update();
+
+		// Processing events (actions) throughout the program 
+
+		bool quit = false;
 
 		if (screen.process_events() == quit) { // returns false if an event (action) is received
 
 			break;
 
 		}
-
+		
 	}
-
-	screen.clear();
 	
+	screen.clear();
+
 	return EXIT_SUCCESS;
+
 }
