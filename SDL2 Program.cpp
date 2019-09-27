@@ -1,11 +1,13 @@
 /*
-  // Program.cpp : This file contains the 'main' function. Program execution begins and ends there.
+  // SDL2 Program.cpp : This file contains the 'main' function. Program execution begins and ends there.
 
-  // Creating an SDL Window
+  KEY FEATURES
 
-  // Screen Class
+  - Creating an SDL Window
 
-  // Bit-Shifting (see Bit-Shifting.cpp)
+  - Screen Class
+
+  - Bit-Shifting (see Bit-Shifting.cpp)
 
 */
 
@@ -31,6 +33,14 @@ int main(int argc, char *argv[]) {
 
 	while (true) {
 
+		// Trying to gradually animate color pixels using the 'sin()' function
+		
+		Uint32 run_time{ SDL_GetTicks() }; // gets the number of milliseconds since the program started
+
+		double slow_anim{ sin(run_time) * 0.01 };
+
+		std::cout << ls << slow_anim << std::endl;
+
 		// use 'set_color()' to set position and color values of pixels
 		// use 'preset_color()' to set position and use preset color values of pixels
 
@@ -47,6 +57,8 @@ int main(int argc, char *argv[]) {
 		// use 'preset_pixels()' to set color, but use preset position of individual pixel on the screen (usually in the middle)
 
 		screen.preset_pixels(255, 0, 0);
+
+		// looping a pixel pattern
 
 		// Render/Update screen texture (pixel info ) in window
 
