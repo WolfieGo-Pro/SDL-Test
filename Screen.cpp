@@ -129,6 +129,39 @@ namespace sdl_wilfred {
 
 	}
 
+	unsigned char Screen::animate_pixels(std::string pixel_name, Uint32& runtime){
+		
+		double anim_speed = 0.0001;
+
+		const int smooth_transition = 255; // max pixel value is 255
+
+		// this array slows the code as it increases the no. of processing to be done per pixel
+
+		unsigned char anim_array[]{ 
+
+			(unsigned char)((sin(runtime * anim_speed) * smooth_transition)),
+
+			(unsigned char)((cos(runtime * (anim_speed += 0.0001)) * smooth_transition)),
+
+			(unsigned char)((sin(runtime * (anim_speed += 0.0001)) * smooth_transition))
+
+		};
+
+		if (pixel_name == "red") {
+			return anim_array[0];
+		}
+		else if (pixel_name == "green") {
+			return anim_array[1];
+		}
+		else if(pixel_name == "blue"){
+			return anim_array[2];
+		}
+		else {
+			std::cout << "Name of pixel to animate has not been specified" << std::endl;
+		}
+
+	}
+
 	void Screen::update() {
 
 		SDL_UpdateTexture(m_texturer, NULL, pixel_buffer, screen_width * sizeof(Uint32)); // updates texture info from the pixel storage area
@@ -150,7 +183,7 @@ namespace sdl_wilfred {
 		while (SDL_PollEvent(&events)) { 
 
 			if (events.type == SDL_QUIT) {
-
+				
 				return false;
 			}
 
