@@ -11,16 +11,6 @@ namespace sdl_wilfred {
 
 		Uint32 color; // 4-byte unsigned char storage for screen and pixel color
 
-		struct PRESET_COLORS {
-
-			// Color format 0x-RR-GG-BB-AA
-
-			Uint32 black_pr = 00;
-			Uint64 pink_pr = 25525525500;
-			Uint32 yellow_pr = 0xFFFF3300;
-			Uint32 green_pr = 0x90BB00AA;
-
-		};
 		
 		Screen();
 
@@ -35,6 +25,8 @@ namespace sdl_wilfred {
 
 		void preset_pixels(Uint8 r, Uint8 g, Uint8 b); // set color, but use preset position of individual pixel on the screen (in the middle)
 
+
+		unsigned char animate_pixels(std::string pixel_name, Uint32& runtime);
 
 		void update(); // updates/refreshes texture info on the screen
 
@@ -52,6 +44,47 @@ namespace sdl_wilfred {
 
 	};
 
+	class Color {
+
+	public:
+
+		double anim_speed;
+
+		const int smooth_transition;
+
+		Color(double anim_speed) : anim_speed(anim_speed), smooth_transition(255) {}
+
+		unsigned char animate(Uint32 run_time){
+
+			return (unsigned char)((sin(run_time * anim_speed) * smooth_transition));
+
+		};
+
+	};
+
+	class Red : public Color {
+
+	public:
+
+		Red() : Color(0.0001) {}
+
+	};
+
+	class Green : public Color {
+
+	public:
+
+		Green() : Color(0.0002) {}
+
+	};
+
+	class Blue : public Color {
+
+	public:
+
+		Blue() : Color(0.0003) {}
+
+	};
 }
 
 #endif // !SCREEN_H

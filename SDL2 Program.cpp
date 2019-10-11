@@ -28,35 +28,46 @@ int main(int argc, char *argv[]) {
 		screen.clear();
 
 	}
+	
+	struct PRESET_COLORS {
 
-	Screen::PRESET_COLORS preset; // instantiates a struct object that contains preset color values in hex
+		// Color format 0x-RR-GG-BB-AA
+
+		Uint32 black_fixed = 00;
+		Uint64 pink_fixed = 25525525500;
+		Uint32 yellow_fixed = 0xFFFF3300;
+		Uint32 green_fixed = 0x90BB00AA;
+
+	};
+	PRESET_COLORS preset; // instantiates a struct object that contains preset color values in hex
 
 	while (true) {
 
-		// Trying to gradually animate color pixels using the 'sin()' function
-		// Gonna be putting the pixel animations in a struct
+		Uint32 run_time = SDL_GetTicks();// gets the number of milliseconds since the program started
+
+		// Animating color pixels using the trigonometric functions: sin() and cos()
 		
-		Uint32 run_time = SDL_GetTicks(); // gets the number of milliseconds since the program started
+		
+		auto red{
 
-		auto red_anim{
+			screen.animate_pixels("red", run_time)
 
-			(unsigned char)((sin(run_time * 0.0001) * 254))
+		};
+	
+		auto green{
+
+			screen.animate_pixels("green", run_time)
+
+		};
+
+		auto blue{
+
+			screen.animate_pixels("blue", run_time)
 
 		};
 		
-		auto green_anim{
 
-			(unsigned char)((cos(run_time * 0.0002) * 229))
-
-		};
-
-		auto blue_anim{
-			
-			(unsigned char)((sin(run_time * 0.0003) * 204))
-
-		};
-
-		//std::cout << ls << "Ranges of pixels (min to max and vice versa) are : " << blue_anim << std::endl;
+		//std::cout << ls << "Ranges of pixels (min to max and vice versa) are : " << red << std::endl;
 
 		// use 'set_color()' to set position and color values of pixels
 		// use 'preset_color()' to set position and use preset color values of pixels
@@ -65,7 +76,7 @@ int main(int argc, char *argv[]) {
 
 			for (int y = 0; y < Screen::screen_length; y++) {
 
-				screen.set_color(x, y, red_anim, green_anim, blue_anim);
+				screen.set_color(x, y, red, green, blue);
 
 			}
 		}
@@ -73,7 +84,7 @@ int main(int argc, char *argv[]) {
 		// use 'set_pixel()' to render/draw individual pixel on the screen
 		// use 'preset_pixels()' to set color, but use preset position of individual pixel on the screen (usually in the middle)
 
-		screen.preset_pixels(60, 30, blue_anim);
+		//screen.preset_pixels(60, 30, blue);
 
 		// looping a pixel pattern
 

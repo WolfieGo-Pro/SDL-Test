@@ -143,7 +143,7 @@ namespace sdl_wilfred {
 
 			(unsigned char)((cos(runtime * (anim_speed += 0.0001)) * smooth_transition)),
 
-			(unsigned char)((sin(runtime * (anim_speed += 0.0001)) * smooth_transition))
+			(unsigned char)((sin(runtime * (anim_speed += 0.0002)) * smooth_transition))
 
 		};
 
