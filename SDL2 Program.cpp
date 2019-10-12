@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 		screen.clear();
 
 	}
-	
+
 	struct PRESET_COLORS {
 
 		// Color format 0x-RR-GG-BB-AA
@@ -41,32 +41,36 @@ int main(int argc, char *argv[]) {
 	};
 	PRESET_COLORS preset; // instantiates a struct object that contains preset color values in hex
 
+	Red red;
+	Green green;
+	Blue blue;
+
 	while (true) {
 
 		Uint32 run_time = SDL_GetTicks();// gets the number of milliseconds since the program started
 
 		// Animating color pixels using the trigonometric functions: sin() and cos()
 		
-		
-		auto red{
+		/*
+		auto red_pixel{
 
 			screen.animate_pixels("red", run_time)
 
 		};
 	
-		auto green{
+		auto green_pixel{
 
 			screen.animate_pixels("green", run_time)
 
 		};
 
-		auto blue{
+		auto blue_pixel{
 
 			screen.animate_pixels("blue", run_time)
 
 		};
+		*/
 		
-
 		//std::cout << ls << "Ranges of pixels (min to max and vice versa) are : " << red << std::endl;
 
 		// use 'set_color()' to set position and color values of pixels
@@ -76,7 +80,7 @@ int main(int argc, char *argv[]) {
 
 			for (int y = 0; y < Screen::screen_length; y++) {
 
-				screen.set_color(x, y, red, green, blue);
+				screen.set_color(x, y, red.animate(run_time), green.animate(run_time), blue.animate(run_time));
 
 			}
 		}
@@ -85,8 +89,7 @@ int main(int argc, char *argv[]) {
 		// use 'preset_pixels()' to set color, but use preset position of individual pixel on the screen (usually in the middle)
 
 		//screen.preset_pixels(60, 30, blue);
-
-		// looping a pixel pattern
+		
 
 		// Render/Update screen texture (pixel info ) in window
 
