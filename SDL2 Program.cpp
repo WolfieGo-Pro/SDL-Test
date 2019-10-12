@@ -70,6 +70,12 @@ int main(int argc, char *argv[]) {
 
 		};
 		*/
+
+		auto r = red.animate(run_time);
+		
+		auto g = green.animate(run_time);
+
+		auto b = blue.animate(run_time);
 		
 		//std::cout << ls << "Ranges of pixels (min to max and vice versa) are : " << red << std::endl;
 
@@ -80,7 +86,7 @@ int main(int argc, char *argv[]) {
 
 			for (int y = 0; y < Screen::screen_length; y++) {
 
-				screen.set_color(x, y, red.animate(run_time), green.animate(run_time), blue.animate(run_time));
+				screen.set_color(x, y, r, g, b);
 
 			}
 		}
@@ -89,7 +95,6 @@ int main(int argc, char *argv[]) {
 		// use 'preset_pixels()' to set color, but use preset position of individual pixel on the screen (usually in the middle)
 
 		//screen.preset_pixels(60, 30, blue);
-		
 
 		// Render/Update screen texture (pixel info ) in window
 
