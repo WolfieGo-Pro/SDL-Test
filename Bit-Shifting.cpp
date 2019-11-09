@@ -9,8 +9,8 @@
 
   8 Bits == 1 Byte == 2 Digits (in hex).
 
-  So that if shifts towards the left in twos or shift towards the left per byte (in hex).
+  So that it shifts towards the left in twos or shift towards the left per byte (in hex).
 
 */
 
-#include "pch.h"
+//#include "pch.h"
