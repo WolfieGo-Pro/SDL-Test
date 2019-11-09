@@ -4,9 +4,12 @@
 #include <iostream>
 #include <string>
 #include <SDL.h>
-#include <iomanip>
+//#include <SDL_timer.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
 #include "Screen.h"
-
-const std::string ls{ "\n\t" }; // User-defined variable
+#include "Pixel_Color.h"
+#include "Particle.h"
 
 #endif // !PCH_H
