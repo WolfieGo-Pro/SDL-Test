@@ -11,12 +11,12 @@ namespace sdl_wilfred {
 		color = 0;
 
 	}
-
+	
 	bool Screen::init() {
 
 		if (SDL_Init(SDL_INIT_VIDEO || SDL_INIT_AUDIO) < 0) { // returns an error value of -1
 
-			std::cout << ls << "Error occured. SDL can't initialize." << SDL_GetError() << std::endl;
+			std::cout << "Error occured. SDL can't initialize." << SDL_GetError() << std::endl;
 
 			//SDL_GetError(); //returns a string containing the last error
 
@@ -24,14 +24,14 @@ namespace sdl_wilfred {
 		}
 		else {
 
-			std::cout << ls << "SDL initialized.." << std::endl;
+			std::cout << "SDL initialized.." << std::endl;
 
 			m_window =
 				SDL_CreateWindow("SDL Project", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_length, SDL_WINDOW_OPENGL);
 
 			if (m_window == NULL) {
 
-				std::cout << ls << "Could not create Window." << SDL_GetError() << std::endl;
+				std::cout << "Could not create Window." << SDL_GetError() << std::endl;
 
 				return false;
 			}
@@ -68,66 +68,103 @@ namespace sdl_wilfred {
 		// 0x-RED-GREEN-BLUE-ALPHA. Based from the member pointer, "m_texturer"
 		// Bit-shifting pixel color values to the left per 8 bits (equal to 1 byte) and storing them in 'color' variable
 
-		color += red;
-		color <<= 8;
+		if (x < 0 || x >= screen_width || y < 0 || y >= screen_length) {
+			return;
+		}
+		else {
 
-		color += green;
-		color <<= 8;
+			color += red;
+			color <<= 8;
 
-		color += blue;
-		color <<= 8;
+			color += green;
+			color <<= 8;
 
-		color += 0xFF;
+			color += blue;
+			color <<= 8;
 
-		pixel_buffer[(y * screen_width) + x] = color; // this is one way to render the whole screen
+			color += 0xFF;
+
+			pixel_buffer[(y * screen_width) + x] = color; // this is one way to render the whole screen
+
+		}
 
 	}
 
 	void Screen::preset_color(int x, int y, Uint32& colorz) {
 
-		color = colorz;
+		if (x < 0 || x >= screen_width || y < 0 || y >= screen_length) {
+			return;
+		}
+		else {
 
-		pixel_buffer[(y * screen_width) + x] = color;
+			color = colorz;
+
+			pixel_buffer[(y * screen_width) + x] = color;
+
+		}
 
 	}
 
 	void Screen::set_pixels(int x, int y, Uint8 r, Uint8 g, Uint8 b) {
 
-		// 0x-RED-GREEN-BLUE
+		if (x < 0 || x >= screen_width || y < 0 || y >= screen_length) {
+			return;
+		}
+		else {
 
-		color += r;
-		color <<= 8;
+			// 0x-RED-GREEN-BLUE
 
-		color += g;
-		color <<= 8;
+			color += r;
+			color <<= 8;
 
-		color += b;
-		color <<= 8;
+			color += g;
+			color <<= 8;
 
-		color += 0xFF;
+			color += b;
+			color <<= 8;
 
-		pixel_buffer[(y * screen_width) + x] = color; 
+			color += 0xFF;
 
+			pixel_buffer[(y * screen_width) + x] = color;
+
+		}
+		
 	}
 
-	void Screen::preset_pixels(Uint8 r, Uint8 g, Uint8 b) {
+	/*
+	unsigned char Screen::animate_pixels(char pixel_name, Uint32& runtime){
+		
+		double anim_speed = 0.0001;
 
-		// 0x-RED-GREEN-BLUE
+		const int smooth_transition = 254; // max pixel value is 255
 
-		color += r;
-		color <<= 8;
+		// this array slows the code as it increases the no. of processing to be done per pixel
 
-		color += g;
-		color <<= 8;
+		unsigned char anim_array[]{ 
 
-		color += b;
-		color <<= 8;
+			(unsigned char)((1 + sin(runtime * anim_speed) * smooth_transition)),
 
-		color += 0xFF;
+			(unsigned char)((1 + cos(runtime * (anim_speed += 0.0001)) * smooth_transition)),
 
-		pixel_buffer[(screen_length / 2 * screen_width) + screen_width / 2] = color;
+			(unsigned char)((1 + sin(runtime * (anim_speed += 0.0002)) * smooth_transition))
 
+		};
+
+		if (pixel_name == 'r') {
+			return anim_array[0];
+		}
+		else if (pixel_name == 'g') {
+			return anim_array[1];
+		}
+		else if(pixel_name == 'b'){
+			return anim_array[2];
+		}
+		else {
+			std::cout << "Name of pixel to animate has not been specified" << std::endl;
+		}
+		
 	}
+	*/
 
 	void Screen::update() {
 
@@ -150,7 +187,7 @@ namespace sdl_wilfred {
 		while (SDL_PollEvent(&events)) { 
 
 			if (events.type == SDL_QUIT) {
-
+				
 				return false;
 			}
 
