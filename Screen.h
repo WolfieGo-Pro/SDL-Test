@@ -22,11 +22,13 @@ namespace sdl_wilfred {
 		void preset_color(int x, int y, Uint32& colorz); // set position, but use preset color values of screen color
 		
 
-		void set_pixels(int x, int y, Uint8 r, Uint8 g, Uint8 b); // render/draw individual pixel position and color on the screen
+		void set_pixels(int x, int y, Uint8 r, Uint8 g, Uint8 b); // draw individual pixel position and color on the screen
 
 		//unsigned char animate_pixels(char pixel_letter, Uint32& runtime);
 
-		void update(); // updates/refreshes texture info on the screen
+		void render(); // renders texturer that holds pixel info (color and position of pixels) on the screen
+
+		void update(); // updates/refreshes pixel buffer that holds pixel info on the screen
 
 		bool process_events(); // continuously checks for an event (action) throughout the program once called
 

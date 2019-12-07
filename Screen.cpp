@@ -125,7 +125,7 @@ namespace sdl_wilfred {
 
 			color += 0xFF;
 
-			pixel_buffer[(y * screen_width) + x] = color;
+			pixel_buffer[ (y * screen_width) + x ] = color;
 
 		}
 		
@@ -166,7 +166,7 @@ namespace sdl_wilfred {
 	}
 	*/
 
-	void Screen::update() {
+	void Screen::render() {
 
 		SDL_UpdateTexture(m_texturer, NULL, pixel_buffer, screen_width * sizeof(Uint32)); // updates texture info from the pixel storage area
 
@@ -175,6 +175,12 @@ namespace sdl_wilfred {
 		SDL_RenderCopy(m_renderer, m_texturer, NULL, NULL); // copies texture info to the renderer
 
 		SDL_RenderPresent(m_renderer); // renders texture info on a window
+
+	}
+
+	void Screen::update() {
+
+		memset(pixel_buffer, 0, screen_width * screen_length * sizeof(Uint32));
 
 	}
 

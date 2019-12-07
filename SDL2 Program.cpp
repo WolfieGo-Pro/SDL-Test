@@ -9,9 +9,9 @@
 
   - Bit-Shifting (see Bit-Shifting.cpp)
 
-  - Implementation of Pixel animation (see Pixel_color.h)
+  - Implementation of Pixel color animation (see Pixel_color.h)
 
-  - Particle struct & Particle organizer (see Particle.h & Particle.cpp)
+  - Particle struct & Particle organizer struct (see Particle.h & Particle.cpp)
 
 */
 
@@ -51,13 +51,17 @@ int main(int argc, char *argv[]) {
 	Green green;
 	Blue blue;
 
-	// instantiating an 'organizer class that creates an array of particle objects
+	// instantiating an 'organizer class' that creates an array of particle objects
 	Particle_Organizer particle_organizer;
 	
-	srand((unsigned int)time(NULL)); // changes the sequence of the 'rand()' function (see Particle.cpp)
+	srand((unsigned short)time(NULL)); // changes the sequence of the 'rand()' function (see Particle.cpp)
 
 	while (true) {
 		
+		//std::cout << "Seeding rand with " << (unsigned short)time(NULL) << std::endl;
+
+		screen.update();
+
 		for (int x = 0; x < Screen::screen_width; x++) {
 
 			for (int y = 0; y < Screen::screen_length; y++) {
@@ -67,7 +71,7 @@ int main(int argc, char *argv[]) {
 			}
 
 		}
-		
+
 		Uint32 run_time = SDL_GetTicks(); // gets the number of milliseconds since the program started
 
 		auto r = red.animate(run_time);
@@ -82,20 +86,23 @@ int main(int argc, char *argv[]) {
 
 			Particle particle = ptr_particles[i];
 			
-			// to make sure the particles do not pass the screen's width & length
+			//particle.speed();
 
-			int position_x = (int)((particle.m_position_x) * (Screen::screen_width / 2)); 
-			int position_y = (int)((particle.m_position_y) * (Screen::screen_length / 2));
+			// Make sure the particles do not pass the screen's width & length
+
+			particle.speed();
+
+			double position_x = ((particle.m_position_x) * (Screen::screen_width / 2)); 
+			double position_y = ((particle.m_position_y) * (Screen::screen_length / 2));
 
 			screen.set_pixels(position_x, position_y, r, g, b); // renders/draws individual pixels on the screen
-
 		}
 
 		// Render/Update screen texture (pixel info/particles) in window
 
-		screen.update();
+		screen.render();
 
-		// Processing events (actions) throughout the program 
+		// Processes events (actions) throughout the program 
 
 		bool quit = false;
 
