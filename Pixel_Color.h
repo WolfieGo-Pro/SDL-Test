@@ -17,11 +17,13 @@ namespace sdl_wilfred {
 
 		unsigned char animate(Uint32 run_time) {
 
-			return (unsigned char)((1 + sin(run_time * anim_speed) * smooth_transition));
+			return (unsigned char)((1 + sin(run_time * anim_speed) * smooth_transition)); // the method that animates pixel colors
 
 		};
 
 	};
+
+	// Each sub-class has its own animation speed
 
 	class Red : public Pixel_Color {
 

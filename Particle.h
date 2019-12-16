@@ -8,27 +8,29 @@ namespace sdl_wilfred {
 	struct Particle {
 
 		double m_position_x, m_position_y;
+		double m_speed_x, m_speed_y;
+		double speed_K; // speed constant
 
-	public:
 		Particle();
 		virtual ~Particle() {};
 
+		void speed();
 	};
 
 	// A class for organizing/calling a collection of particles objects
 
-	class Particle_Organizer {
+	struct Particle_Organizer {
 
 	private:
-		const Particle* m_ptr_particles;
+		 Particle* m_ptr_particles;
 
 	public:
-		static const int NUMBER_OF_PARTICLES = 250;
+		static const int NUMBER_OF_PARTICLES = 500;
 
 		Particle_Organizer();
 		virtual ~Particle_Organizer();
 
-		const Particle* const get_particles() { return m_ptr_particles; };
+		Particle* const get_particles() { return m_ptr_particles; };
 
 	};
 

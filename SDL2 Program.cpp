@@ -9,9 +9,11 @@
 
   - Bit-Shifting (see Bit-Shifting.cpp)
 
-  - Implementation of Pixel animation (see Pixel_color.h)
+  - Implementation of Pixel color animation (see Pixel_color.h)
 
-  - Particle struct & Particle organizer (see Particle.h & Particle.cpp)
+  - Particle struct & Particle organizer struct (see Particle.h & Particle.cpp)
+
+  - Particle animation
 
 */
 
@@ -51,23 +53,15 @@ int main(int argc, char *argv[]) {
 	Green green;
 	Blue blue;
 
-	// instantiating an 'organizer class that creates an array of particle objects
+	// instantiating an 'organizer class' that creates an array of particle objects
 	Particle_Organizer particle_organizer;
 	
-	srand((unsigned int)time(NULL)); // changes the sequence of the 'rand()' function (see Particle.cpp)
+	srand((unsigned short)time(NULL)); // changes the sequence of the 'rand()' function (see Particle.cpp)
 
 	while (true) {
 		
-		for (int x = 0; x < Screen::screen_width; x++) {
+		//std::cout << "Seeding rand with " << (unsigned short)time(NULL) << std::endl;
 
-			for (int y = 0; y < Screen::screen_length; y++) {
-
-				screen.preset_color(x, y, preset.indigo_fixed);
-				//screen.set_color(x, y, 13, 23, 97);
-			}
-
-		}
-		
 		Uint32 run_time = SDL_GetTicks(); // gets the number of milliseconds since the program started
 
 		auto r = red.animate(run_time);
@@ -76,26 +70,42 @@ int main(int argc, char *argv[]) {
 
 		auto b = blue.animate(run_time);
 
-		const Particle* const ptr_particles = particle_organizer.get_particles();
 
-		for (int i = 0; i < Particle_Organizer::NUMBER_OF_PARTICLES; i++) {
+		for (int x = 0; x < Screen::screen_width; ++x) {
 
-			Particle particle = ptr_particles[i];
-			
-			// to make sure the particles do not pass the screen's width & length
+			for (int y = 0; y < Screen::screen_length; ++y) {
 
-			int position_x = (int)((particle.m_position_x) * (Screen::screen_width / 2)); 
-			int position_y = (int)((particle.m_position_y) * (Screen::screen_length / 2));
-
-			screen.set_pixels(position_x, position_y, r, g, b); // renders/draws individual pixels on the screen
+				screen.preset_color(x, y, preset.indigo_fixed);
+				//screen.set_color(x, y, r, g, b);
+			}
 
 		}
 
-		// Render/Update screen texture (pixel info/particles) in window
+
+		Particle* const ptr_particles = particle_organizer.get_particles();
+
+		for (int i = 0; i < Particle_Organizer::NUMBER_OF_PARTICLES; ++i) {
+
+			ptr_particles[i].speed();
+
+			Particle particles = ptr_particles[i];
+
+			// Make sure the particles do not pass the screen's width & length
+
+			double position_x = (particles.m_position_x) * (Screen::screen_width / 2); 
+			double position_y = (particles.m_position_y) * (Screen::screen_length / 2);
+
+			screen.set_pixels(position_x, position_y, r, g, b); // renders/draws individual pixels on the screen
+			
+		}
+		
+		// Render and Update screen texture (pixel info/particles) in window
+
+		screen.render();
 
 		screen.update();
-
-		// Processing events (actions) throughout the program 
+		
+		// Processes events (actions) throughout the program 
 
 		bool quit = false;
 
