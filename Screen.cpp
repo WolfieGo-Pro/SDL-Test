@@ -27,7 +27,7 @@ namespace sdl_wilfred {
 			std::cout << "SDL initialized.." << std::endl;
 
 			m_window =
-				SDL_CreateWindow("SDL Project", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_length, SDL_WINDOW_OPENGL);
+				SDL_CreateWindow("P a R T i C l E s", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_length, SDL_WINDOW_OPENGL);
 
 			if (m_window == NULL) {
 

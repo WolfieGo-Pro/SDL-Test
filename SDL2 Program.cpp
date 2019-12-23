@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
 
 			for (int y = 0; y < Screen::screen_length; ++y) {
 
-				screen.preset_color(x, y, preset.indigo_fixed);
+				screen.preset_color(x, y, preset.black_fixed);
 				//screen.set_color(x, y, r, g, b);
 			}
 

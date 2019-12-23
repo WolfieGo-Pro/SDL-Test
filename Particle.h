@@ -25,7 +25,7 @@ namespace sdl_wilfred {
 		 Particle* m_ptr_particles;
 
 	public:
-		static const int NUMBER_OF_PARTICLES = 500;
+		static const int NUMBER_OF_PARTICLES = 200;
 
 		Particle_Organizer();
 		virtual ~Particle_Organizer();
