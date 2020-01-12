@@ -8,8 +8,14 @@ namespace sdl_wilfred {
 	struct Particle {
 
 		double m_position_x, m_position_y;
-		double m_speed_x, m_speed_y;
 		double speed_K; // speed constant
+
+		double m_speed;
+		double m_direction;
+
+
+		double speed_x; // converting from polar to cartesian coordinates
+		double speed_y;
 
 		Particle();
 		virtual ~Particle() {};
@@ -25,7 +31,7 @@ namespace sdl_wilfred {
 		 Particle* m_ptr_particles;
 
 	public:
-		static const int NUMBER_OF_PARTICLES = 200;
+		static const int NUMBER_OF_PARTICLES = 1000;
 
 		Particle_Organizer();
 		virtual ~Particle_Organizer();

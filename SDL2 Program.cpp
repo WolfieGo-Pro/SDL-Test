@@ -15,6 +15,8 @@
 
   - Particle animation
 
+  - Center explosion of particles using polar a co-ordinate system
+
 */
 
 #include "pch.h"
@@ -93,7 +95,7 @@ int main(int argc, char *argv[]) {
 			// Make sure the particles do not pass the screen's width & length
 
 			double position_x = (particles.m_position_x) * (Screen::screen_width / 2); 
-			double position_y = (particles.m_position_y) * (Screen::screen_length / 2);
+			double position_y = (particles.m_position_y) * (Screen::screen_width / 2) - (Screen::screen_length / 2);
 
 			screen.set_pixels(position_x, position_y, r, g, b); // renders/draws individual pixels on the screen
 			
