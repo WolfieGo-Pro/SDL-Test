@@ -15,7 +15,7 @@
 
   - Particle animation
 
-  - Center explosion of particles using polar a co-ordinate system
+  - Center explosion of particles using polar co-ordinate system
 
 */
 
@@ -25,9 +25,9 @@ using namespace sdl_wilfred;
 
 int main(int argc, char *argv[]) {
 
-	Screen screen;
-
 	std::cout << "Hey!" << std::endl;
+	
+	Screen screen;
 
 	if (screen.init() == false) {
 
