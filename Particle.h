@@ -17,24 +17,27 @@ namespace sdl_wilfred {
 		double speed_x; // converting from polar to cartesian coordinates
 		double speed_y;
 
+		int life;
+
 		Particle();
 		virtual ~Particle() {};
 
-		void speed();
+		void speed_up();
 	};
 
 	// A class for organizing/calling a collection of particles objects
 
-	struct Particle_Organizer {
+	struct Particle_Manager {
 
 	private:
 		 Particle* m_ptr_particles;
 
 	public:
-		static const int NUMBER_OF_PARTICLES = 1000;
+		static const int NUMBER_OF_PARTICLES = 1200;
 
-		Particle_Organizer();
-		virtual ~Particle_Organizer();
+		Particle_Manager();
+		virtual ~Particle_Manager();
+		
 
 		Particle* const get_particles() { return m_ptr_particles; };
 

@@ -17,6 +17,10 @@
 
   - Center explosion of particles using polar co-ordinate system
 
+  - Mapping particle co-ordinate dimensions to screen dimensions
+
+  - Ensuring Constant speed on all computers
+
 */
 
 #include "pch.h"
@@ -37,18 +41,24 @@ int main(int argc, char *argv[]) {
 
 	}
 
-	struct PRESET_COLORS {
+	srand((unsigned short)time(NULL)); // changes the sequence of the 'rand()' function (see Particle.cpp)
+
+
+	struct COLORS {
 
 		// Color format 0x-RR-GG-BB-AA
 
-		Uint32 black_fixed = 00;
-		Uint32 blue_fixed = 0x132397AA;
-		Uint32 pink_fixed = 2552552550;
-		Uint32 yellow_fixed = 0xFFFF3300;
-		Uint32 green_fixed = 0x90BB00AA;
-		Uint32 indigo_fixed = 0x16032240;
-	};
-	PRESET_COLORS preset; // instantiates a struct object that contains preset color values in hex
+		Uint32 black = 00;
+		Uint32 blue = 0x132397AA;
+		Uint32 pink = 2552552550;
+		Uint32 yellow = 0xFFFF3300;
+		Uint32 green = 0x90BB00AA;
+		Uint32 indigo = 0x16032240;
+
+		//std::vector<Uint32> colorz{ black, blue, pink, yellow, green, indigo };
+
+	} colors;
+
 
 	// instantiating objects from subclass of 'Pixel_Color' class
 	Red red;
@@ -56,12 +66,10 @@ int main(int argc, char *argv[]) {
 	Blue blue;
 
 	// instantiating an 'organizer class' that creates an array of particle objects
-	Particle_Organizer particle_organizer;
-	
-	srand((unsigned short)time(NULL)); // changes the sequence of the 'rand()' function (see Particle.cpp)
+	Particle_Manager particle_manager;
 
 	while (true) {
-		
+
 		//std::cout << "Seeding rand with " << (unsigned short)time(NULL) << std::endl;
 
 		Uint32 run_time = SDL_GetTicks(); // gets the number of milliseconds since the program started
@@ -72,29 +80,37 @@ int main(int argc, char *argv[]) {
 
 		auto b = blue.animate(run_time);
 
+		//Uint32 color_mix = (Uint32) sin( (r - g - (-b) * rand()) ) ;
+		Uint32 color_mix = ( run_time - sin(rand()) ) ;
+		
+		//std::cout << "color mix = " << std::setw(3) << color_mix << std::endl;
 
-		for (int x = 0; x < Screen::screen_width; ++x) {
+		//screen.preset_color(1, 1, preset.colors.yellow);
+		
+		/*
+		for (int x = 0; x < Screen::screen_width; x++) {
 
-			for (int y = 0; y < Screen::screen_length; ++y) {
+			for (int y = 0; y < Screen::screen_length; y++) {
+				
+				screen.preset_color(x, y, color_mix);
 
-				screen.preset_color(x, y, preset.black_fixed);
-				//screen.set_color(x, y, r, g, b);
 			}
-
 		}
+		*/
+		
 
+		Particle* const ptr_particles = particle_manager.get_particles();
 
-		Particle* const ptr_particles = particle_organizer.get_particles();
+		for (int i = 0; i < Particle_Manager::NUMBER_OF_PARTICLES; ++i) {
 
-		for (int i = 0; i < Particle_Organizer::NUMBER_OF_PARTICLES; ++i) {
-
-			ptr_particles[i].speed();
+			ptr_particles[i].speed_up();
 
 			Particle particles = ptr_particles[i];
 
-			// Make sure the particles do not pass the screen's width & length
+			// Make sure the particles start in the middle
 
-			double position_x = (particles.m_position_x) * (Screen::screen_width / 2); 
+			double position_x = (particles.m_position_x) * (Screen::screen_width / 2);
+			//double position_y = (particles.m_position_y) * (Screen::screen_width / 2);
 			double position_y = (particles.m_position_y) * (Screen::screen_width / 2) - (Screen::screen_length / 6);
 
 			screen.set_pixels(position_x, position_y, r, g, b); // renders/draws individual pixels on the screen
