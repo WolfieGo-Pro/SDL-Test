@@ -15,9 +15,9 @@ namespace sdl_wilfred {
 
 		virtual ~Pixel_Color() {};
 
-		unsigned char animate(Uint32 run_time) {
+		Uint32 animate(Uint32 run_time) {
 
-			return (unsigned char)((1 + sin(run_time * anim_speed) * smooth_transition)); // the method that animates pixel colors
+			return (Uint32)((1 + sin(run_time * anim_speed) * smooth_transition)); // the method that animates pixel colors
 
 		};
 

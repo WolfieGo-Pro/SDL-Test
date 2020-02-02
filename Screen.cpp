@@ -27,9 +27,9 @@ namespace sdl_wilfred {
 			std::cout << "SDL initialized.." << std::endl;
 
 			m_window =
-				SDL_CreateWindow("SDL Project", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_length, SDL_WINDOW_OPENGL);
+				SDL_CreateWindow("P A R T i C l E s", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_length, SDL_WINDOW_RESIZABLE);
 
-			if (m_window == NULL) {
+			if (!m_window) {
 
 				std::cout << "Could not create Window." << SDL_GetError() << std::endl;
 
@@ -39,7 +39,7 @@ namespace sdl_wilfred {
 			m_renderer =
 				SDL_CreateRenderer(m_window, -1, SDL_RENDERER_PRESENTVSYNC);
 
-			if (m_renderer == NULL) {
+			if (!m_renderer) {
 
 				std::cout << "Could not render." << SDL_GetError() << std::endl;
 
@@ -49,9 +49,9 @@ namespace sdl_wilfred {
 			m_texturer =
 				SDL_CreateTexture(m_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STATIC, screen_width, screen_length);
 
-			if (m_texturer == NULL) {
+			if (!m_texturer) {
 
-				std::cout << "Could not create texture." << std::endl;
+				std::cout << "Could not create texturer." << std::endl;
 
 				return false;
 			}

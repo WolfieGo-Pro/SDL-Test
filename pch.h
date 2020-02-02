@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <iomanip>
 #include <SDL.h>
 //#include <SDL_timer.h>
 #include <stdlib.h>
@@ -11,5 +12,6 @@
 #include "Screen.h"
 #include "Pixel_Color.h"
 #include "Particle.h"
+#include <vector>
 
 #endif // !PCH_H
