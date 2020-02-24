@@ -44,6 +44,7 @@ int main(int argc, char *argv[]) {
 	srand((unsigned short)time(NULL)); // changes the sequence of the 'rand()' function (see Particle.cpp)
 
 
+
 	struct COLORS {
 
 		// Color format 0x-RR-GG-BB-AA
@@ -60,10 +61,11 @@ int main(int argc, char *argv[]) {
 	} colors;
 
 
-	// instantiating objects from subclass of 'Pixel_Color' class
+	// instantiating color objects from subclass of 'Pixel_Color' class
 	Red red;
 	Green green;
 	Blue blue;
+
 
 	// instantiating an 'organizer class' that creates an array of particle objects
 	Particle_Manager particle_manager;
@@ -81,7 +83,7 @@ int main(int argc, char *argv[]) {
 		auto b = blue.animate(run_time);
 
 		//Uint32 color_mix = (Uint32) sin( (r - g - (-b) * rand()) ) ;
-		Uint32 color_mix = ( run_time - sin(rand()) ) ;
+		//Uint32 color_mix = ( run_time - sin(rand()) ) ;
 		
 		//std::cout << "color mix = " << std::setw(3) << color_mix << std::endl;
 
@@ -92,29 +94,36 @@ int main(int argc, char *argv[]) {
 
 			for (int y = 0; y < Screen::screen_length; y++) {
 				
-				screen.preset_color(x, y, color_mix);
-
+				screen.preset_color(x, y, colors.indigo);
+			
 			}
 		}
 		*/
-		
 
-		Particle* const ptr_particles = particle_manager.get_particles();
+
+		Particle* ptr_particles = particle_manager.get_particles();
 
 		for (int i = 0; i < Particle_Manager::NUMBER_OF_PARTICLES; ++i) {
 
-			ptr_particles[i].speed_up();
+			try {
 
-			Particle particles = ptr_particles[i];
+				ptr_particles[i].speed_up(run_time);
 
-			// Make sure the particles start in the middle
+				Particle particles = ptr_particles[i];
 
-			double position_x = (particles.m_position_x) * (Screen::screen_width / 2);
-			//double position_y = (particles.m_position_y) * (Screen::screen_width / 2);
-			double position_y = (particles.m_position_y) * (Screen::screen_width / 2) - (Screen::screen_length / 6);
+				// Make sure the particles start in the middle
 
-			screen.set_pixels(position_x, position_y, r, g, b); // renders/draws individual pixels on the screen
-			
+				double position_x = (particles.m_position_x) * (Screen::screen_width / 2);
+				//double position_y = (particles.m_position_y) * (Screen::screen_width / 2);
+				double position_y = (particles.m_position_y) * (Screen::screen_width / 2) - (Screen::screen_length / 6);
+
+				screen.set_pixels(position_x, position_y, r, g, b); // renders/draws individual pixels on the screen
+			}
+			catch (std::logic_error& e) {
+
+				std::cerr << "Error. " << e.what();
+			}
+
 		}
 		
 		// Render and Update screen texture (pixel info/particles) in window

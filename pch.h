@@ -12,6 +12,7 @@
 #include "Screen.h"
 #include "Pixel_Color.h"
 #include "Particle.h"
-#include <vector>
+#include <exception>
+#include <stdexcept>
 
 #endif // !PCH_H
