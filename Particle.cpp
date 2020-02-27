@@ -14,32 +14,34 @@ namespace sdl_wilfred {
 		m_speed_y = speed_K * ((2.0 * rand()) / RAND_MAX - 1);
 		*/
 
-		speed_K = (0.000000025); // speed constant	
+		speed_K = (0.00000025); // speed constant	
 
-		life = SDL_GetTicks();
+		last_time_since_particle_moved = 0;
+
+		//particle_life_time = SDL_GetTicks();
 
 		// cartesian
-
 		speed_x = 0;
 		speed_y = 0;
 
 		//polar
-
-		m_speed = (speed_K * rand()) / life;
+		m_speed = (speed_K * rand()) / RAND_MAX;
 
 		m_direction = (2 * M_PI * rand())/ RAND_MAX;
-
 	}
-	
-	void Particle::speed_up() {
 
-		speed_x = m_speed * cos(m_direction); // converting from polar to cartesian coordinates
+	void Particle::speed_up(int last_time_this_method_ran) {
+
+		// converting from polar to cartesian coordinates
+		speed_x = m_speed * cos(m_direction);
 		speed_y = m_speed * sin(m_direction);
-		
+
+		int constant_speed_interval = last_time_this_method_ran - last_time_since_particle_moved;
+
 		for (int i = 0; i < Particle_Manager::NUMBER_OF_PARTICLES; i++) {
 
-			m_position_x += speed_x;
-			m_position_y += speed_y;
+			m_position_x += speed_x * constant_speed_interval;
+			m_position_y += speed_y * constant_speed_interval;
 
 			// Make sure the particles do not pass the set fixed range-positions for x and y. ( 0 to 2)
 
@@ -51,21 +53,27 @@ namespace sdl_wilfred {
 			}
 
 		}
-		
-	}
 
+		last_time_since_particle_moved = last_time_this_method_ran;
 
-	Particle_Manager::Particle_Manager() {
+		//return constant_speed_interval;
+	};
 
-		m_ptr_particles = new Particle[NUMBER_OF_PARTICLES];
+	//////////////////////////////////////////////////////////////////////////////////////////////
 
-	}
+	Particle_Manager::Particle_Manager() : m_ptr_particles(nullptr) {
 
+		m_ptr_particles = new Particle[NUMBER_OF_PARTICLES]; // going to have to use smart pointers
+
+		if (!m_ptr_particles)
+			throw std::logic_error("Cannot plot particles.");
+
+	};
+	
 	Particle_Manager::~Particle_Manager() {
 
 		delete[] m_ptr_particles;
 
-	}
-
+	};
 
 }

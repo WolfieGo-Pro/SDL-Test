@@ -17,12 +17,13 @@ namespace sdl_wilfred {
 		double speed_x; // converting from polar to cartesian coordinates
 		double speed_y;
 
-		int life;
+		//int particle_life_time; // no. of milliseconds since a particle was created/instantiated
+		int last_time_since_particle_moved; // no. of milliseconds passed since a particle increased its speed. Value has to come from main.cpp
 
 		Particle();
 		virtual ~Particle() {};
 
-		void speed_up();
+		void speed_up(int last_time_this_method_ran);
 	};
 
 	// A class for organizing/calling a collection of particles objects
@@ -33,12 +34,11 @@ namespace sdl_wilfred {
 		 Particle* m_ptr_particles;
 
 	public:
-		static const int NUMBER_OF_PARTICLES = 1200;
+		static const int NUMBER_OF_PARTICLES = 1000;
 
 		Particle_Manager();
 		virtual ~Particle_Manager();
 		
-
 		Particle* const get_particles() { return m_ptr_particles; };
 
 	};
