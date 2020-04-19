@@ -1,6 +1,8 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
+#define LOG std::cout
+
 namespace sdl_wilfred {
 
 // Defining how arrays of pixels (particles) should be plotted on the screen
@@ -23,15 +25,16 @@ namespace sdl_wilfred {
 		Particle();
 		virtual ~Particle() {};
 
-		void speed_up(int last_time_this_method_ran);
+		void speed_up(const double& last_time_this_method_ran);
 	};
 
-	// A class for organizing/calling a collection of particles objects
+	// A class for managing/calling a collection of particles objects
 
+	
 	struct Particle_Manager {
 
 	private:
-		 Particle* m_ptr_particles;
+		 Particle* m_ptr_particles; //really wanted to use a unique smart pointer, but could not
 
 	public:
 		static const int NUMBER_OF_PARTICLES = 1000;
@@ -39,7 +42,7 @@ namespace sdl_wilfred {
 		Particle_Manager();
 		virtual ~Particle_Manager();
 		
-		Particle* const get_particles() { return m_ptr_particles; };
+		Particle* get_particles() { return m_ptr_particles; };
 
 	};
 

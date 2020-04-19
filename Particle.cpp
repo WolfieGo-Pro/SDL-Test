@@ -20,17 +20,21 @@ namespace sdl_wilfred {
 
 		//particle_life_time = SDL_GetTicks();
 
-		// cartesian
+		// cartesian - (x,y)
 		speed_x = 0;
 		speed_y = 0;
 
-		//polar
-		m_speed = (speed_K * rand()) / RAND_MAX;
+		//polar - (r,0)
+		m_speed = (speed_K * rand()) / RAND_MAX; 
 
-		m_direction = (2 * M_PI * rand())/ RAND_MAX;
+		std::vector<int>rads{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+		m_direction = (2 * M_PI * rand()) / RAND_MAX; //full rotation/revolution/circle
+		
+		//LOG << std::scientific << (speed_K * rand()) / RAND_MAX << '\n';
 	}
 
-	void Particle::speed_up(int last_time_this_method_ran) {
+	void Particle::speed_up(const double& last_time_this_method_ran) {
 
 		// converting from polar to cartesian coordinates
 		speed_x = m_speed * cos(m_direction);
@@ -56,14 +60,14 @@ namespace sdl_wilfred {
 
 		last_time_since_particle_moved = last_time_this_method_ran;
 
-		//return constant_speed_interval;
 	};
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
-
+	
 	Particle_Manager::Particle_Manager() : m_ptr_particles(nullptr) {
 
-		m_ptr_particles = new Particle[NUMBER_OF_PARTICLES]; // going to have to use smart pointers
+		//m_ptr_particles = std::make_unique<Particle[]>(NUMBER_OF_PARTICLES);
+		m_ptr_particles = new Particle[NUMBER_OF_PARTICLES];
 
 		if (!m_ptr_particles)
 			throw std::logic_error("Cannot plot particles.");
