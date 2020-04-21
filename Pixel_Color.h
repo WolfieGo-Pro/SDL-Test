@@ -17,7 +17,7 @@ namespace sdl_wilfred {
 
 		Uint32 animate(Uint32& run_time) {
 
-			return (Uint32)((1 + sin(run_time * anim_speed) * smooth_transition)); // the method that animates pixel colors
+			return (Uint32)((1 + std::cos(run_time * anim_speed) * smooth_transition)); // the method that animates pixel colors
 
 		};
 

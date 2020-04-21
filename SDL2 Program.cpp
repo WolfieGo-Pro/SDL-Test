@@ -21,6 +21,8 @@
 
   - Ensuring Constant speed on all computers
 
+  - Implementing Box blur
+
 
 
   mess with the m_direction value in the Particle struct by dividing by radians (6, 3) or rand()
@@ -78,11 +80,11 @@ int main(int argc, char *argv[]) {
 
 		Uint32 run_time = SDL_GetTicks(); // gets the number of milliseconds since the program started
 
-		auto r = red.animate(run_time);
+		Uint8 r = red.animate(run_time);
+		
+		Uint8 g = green.animate(run_time);
 
-		auto g = green.animate(run_time);
-
-		auto b = blue.animate(run_time);
+		Uint8 b = blue.animate(run_time);
 
 		
 		/*

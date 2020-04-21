@@ -20,7 +20,7 @@ namespace sdl_wilfred {
 		double speed_y;
 
 		//int particle_life_time; // no. of milliseconds since a particle was created/instantiated
-		int last_time_since_particle_moved; // no. of milliseconds passed since a particle increased its speed. Value has to come from main.cpp
+		double last_time_since_particle_moved; // no. of milliseconds passed since a particle increased its speed. Value has to come from main.cpp
 
 		Particle();
 		virtual ~Particle() {};
@@ -37,7 +37,7 @@ namespace sdl_wilfred {
 		 Particle* m_ptr_particles; //really wanted to use a unique smart pointer, but could not
 
 	public:
-		static const int NUMBER_OF_PARTICLES = 1000;
+		static const int NUMBER_OF_PARTICLES = 1500;
 
 		Particle_Manager();
 		virtual ~Particle_Manager();
