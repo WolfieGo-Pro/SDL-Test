@@ -1,6 +1,8 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
+#define LOG std::cout
+
 namespace sdl_wilfred {
 
 // Defining how arrays of pixels (particles) should be plotted on the screen
@@ -18,28 +20,29 @@ namespace sdl_wilfred {
 		double speed_y;
 
 		//int particle_life_time; // no. of milliseconds since a particle was created/instantiated
-		int last_time_since_particle_moved; // no. of milliseconds passed since a particle increased its speed. Value has to come from main.cpp
+		double last_time_since_particle_moved; // no. of milliseconds passed since a particle increased its speed. Value has to come from main.cpp
 
 		Particle();
 		virtual ~Particle() {};
 
-		void speed_up(int last_time_this_method_ran);
+		void speed_up(const double& last_time_this_method_ran);
 	};
 
-	// A class for organizing/calling a collection of particles objects
+	// A class for managing/calling a collection of particles objects
 
+	
 	struct Particle_Manager {
 
 	private:
-		 Particle* m_ptr_particles;
+		 Particle* m_ptr_particles; //really wanted to use a unique smart pointer, but could not
 
 	public:
-		static const int NUMBER_OF_PARTICLES = 1000;
+		static const int NUMBER_OF_PARTICLES = 1500;
 
 		Particle_Manager();
 		virtual ~Particle_Manager();
 		
-		Particle* const get_particles() { return m_ptr_particles; };
+		Particle* get_particles() { return m_ptr_particles; };
 
 	};
 

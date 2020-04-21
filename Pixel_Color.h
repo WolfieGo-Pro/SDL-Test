@@ -11,13 +11,13 @@ namespace sdl_wilfred {
 
 		const int smooth_transition;
 
-		Pixel_Color(double anim_speed) : anim_speed(anim_speed), smooth_transition(254) {}
+		Pixel_Color(double anim_speed) : anim_speed(anim_speed), smooth_transition(128) {}
 
 		virtual ~Pixel_Color() {};
 
-		Uint32 animate(Uint32 run_time) {
+		Uint32 animate(Uint32& run_time) {
 
-			return (Uint32)((1 + sin(run_time * anim_speed) * smooth_transition)); // the method that animates pixel colors
+			return (Uint32)((1 + std::cos(run_time * anim_speed) * smooth_transition)); // the method that animates pixel colors
 
 		};
 
@@ -29,7 +29,7 @@ namespace sdl_wilfred {
 
 	public:
 
-		Red() : Pixel_Color(0.0001) {}
+		explicit Red() : Pixel_Color(0.0001) {}
 
 	};
 
@@ -37,7 +37,7 @@ namespace sdl_wilfred {
 
 	public:
 
-		Green() : Pixel_Color(0.0002) {}
+		explicit Green() : Pixel_Color(0.0002) {}
 
 	};
 
@@ -45,7 +45,7 @@ namespace sdl_wilfred {
 
 	public:
 
-		Blue() : Pixel_Color(0.0003) {}
+		explicit Blue() : Pixel_Color(0.0003) {}
 
 	};
 

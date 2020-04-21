@@ -21,6 +21,11 @@
 
   - Ensuring Constant speed on all computers
 
+  - Implementing Box blur
+
+
+
+  mess with the m_direction value in the Particle struct by dividing by radians (6, 3) or rand()
 */
 
 #include "pch.h"
@@ -44,7 +49,8 @@ int main(int argc, char *argv[]) {
 	srand((unsigned short)time(NULL)); // changes the sequence of the 'rand()' function (see Particle.cpp)
 
 
-
+	/*
+	For changing the background color of the screen
 	struct COLORS {
 
 		// Color format 0x-RR-GG-BB-AA
@@ -59,7 +65,7 @@ int main(int argc, char *argv[]) {
 		//std::vector<Uint32> colorz{ black, blue, pink, yellow, green, indigo };
 
 	} colors;
-
+	*/
 
 	// instantiating color objects from subclass of 'Pixel_Color' class
 	Red red;
@@ -67,29 +73,24 @@ int main(int argc, char *argv[]) {
 	Blue blue;
 
 
-	// instantiating an 'organizer class' that creates an array of particle objects
+	// instantiating a 'manager class' that returns a pointer to an array of particle objects
 	Particle_Manager particle_manager;
 
 	while (true) {
 
-		//std::cout << "Seeding rand with " << (unsigned short)time(NULL) << std::endl;
-
 		Uint32 run_time = SDL_GetTicks(); // gets the number of milliseconds since the program started
 
-		auto r = red.animate(run_time);
-
-		auto g = green.animate(run_time);
-
-		auto b = blue.animate(run_time);
-
-		//Uint32 color_mix = (Uint32) sin( (r - g - (-b) * rand()) ) ;
-		//Uint32 color_mix = ( run_time - sin(rand()) ) ;
+		Uint8 r = red.animate(run_time);
 		
-		//std::cout << "color mix = " << std::setw(3) << color_mix << std::endl;
+		Uint8 g = green.animate(run_time);
 
-		//screen.preset_color(1, 1, preset.colors.yellow);
+		Uint8 b = blue.animate(run_time);
+
 		
 		/*
+		For changing the color of the screen. (Causes a significant lag)
+
+		
 		for (int x = 0; x < Screen::screen_width; x++) {
 
 			for (int y = 0; y < Screen::screen_length; y++) {
@@ -103,7 +104,7 @@ int main(int argc, char *argv[]) {
 
 		Particle* ptr_particles = particle_manager.get_particles();
 
-		for (int i = 0; i < Particle_Manager::NUMBER_OF_PARTICLES; ++i) {
+		for (auto i = 0; i < Particle_Manager::NUMBER_OF_PARTICLES; ++i) {
 
 			try {
 
@@ -130,7 +131,7 @@ int main(int argc, char *argv[]) {
 
 		screen.render();
 
-		screen.update();
+		//screen.update();
 		
 		// Processes events (actions) throughout the program 
 
